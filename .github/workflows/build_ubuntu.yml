@@ -76,7 +76,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: ${{ env.PACKAGENAME }}.zip
-        path: ${{ env.PACKAGENAME }}
+        path: build/install/*
         retention-days: 90
         
 
@@ -109,8 +109,8 @@ jobs:
     - name: upload-zip
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.PACKAGENAME }}
-        path: ${{ env.PACKAGENAME }}.zip
+        name: ${{ env.PACKAGENAME }}.zip
+        path: build/install/*
 
   ubuntu-2004:
     needs: [setup]
