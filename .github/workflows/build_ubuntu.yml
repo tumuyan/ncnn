@@ -1,4 +1,4 @@
-name: make
+name: buid ubuntu
 on:
   repository_dispatch:
   workflow_dispatch:
@@ -68,12 +68,15 @@ jobs:
         mkdir -p ${{ env.PACKAGENAME }}
         cp -a build/install/* ${{ env.PACKAGENAME }}
         rm -f ${{ env.PACKAGENAME }}.zip
-        zip -9 -y -r ${{ env.PACKAGENAME }}.zip ${{ env.PACKAGENAME }}
+
+    - name: list files
+      run: |
+        ls
     - name: upload-zip
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.PACKAGENAME }}
-        path: ${{ env.PACKAGENAME }}.zip
+        name: ${{ env.PACKAGENAME }}.zip
+        path: ${{ env.PACKAGENAME }}
         retention-days: 90
         
 
