@@ -71,11 +71,11 @@ jobs:
 
     - name: list files
       run: |
-        ls
+        ls build/install
     - name: upload-zip
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.PACKAGENAME }}.zip
+        name: ${{ env.PACKAGENAME }}
         path: build/install/*
         retention-days: 90
         
@@ -109,7 +109,7 @@ jobs:
     - name: upload-zip
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.PACKAGENAME }}.zip
+        name: ${{ env.PACKAGENAME }}
         path: build/install/*
 
   ubuntu-2004:
