@@ -66,6 +66,7 @@ jobs:
       run: |
         rm -rf ${{ env.PACKAGENAME }}
         mkdir -p ${{ env.PACKAGENAME }}
+        cp -a /lib/x86_64-linux-gnu/libm* ${{ env.PACKAGENAME }}
         cp -a build/install/* ${{ env.PACKAGENAME }}
         rm -f ${{ env.PACKAGENAME }}.zip
         zip -9 -y -r ${{ env.PACKAGENAME }}.zip ${{ env.PACKAGENAME }}
@@ -103,6 +104,7 @@ jobs:
       run: |
         rm -rf ${{ env.PACKAGENAME }}
         mkdir -p ${{ env.PACKAGENAME }}
+        cp -a /lib/x86_64-linux-gnu/libm* ${{ env.PACKAGENAME }}
         cp -a -P build/install/* ${{ env.PACKAGENAME }}
         rm -f ${{ env.PACKAGENAME }}.zip
         zip -9 -y -r ${{ env.PACKAGENAME }}.zip ${{ env.PACKAGENAME }}
@@ -139,6 +141,7 @@ jobs:
       run: |
         rm -rf ${{ env.PACKAGENAME }}
         mkdir -p ${{ env.PACKAGENAME }}
+        cp -a /lib/x86_64-linux-gnu/libm* ${{ env.PACKAGENAME }}
         cp -a build/install/* ${{ env.PACKAGENAME }}
         rm -f ${{ env.PACKAGENAME }}.zip
         zip -9 -y -r ${{ env.PACKAGENAME }}.zip ${{ env.PACKAGENAME }}
@@ -175,6 +178,7 @@ jobs:
       run: |
         rm -rf ${{ env.PACKAGENAME }}
         mkdir -p ${{ env.PACKAGENAME }}
+        cp -a /lib/x86_64-linux-gnu/libm* ${{ env.PACKAGENAME }}
         cp -a -P build/install/* ${{ env.PACKAGENAME }}
         rm -f ${{ env.PACKAGENAME }}.zip
         zip -9 -y -r ${{ env.PACKAGENAME }}.zip ${{ env.PACKAGENAME }}
@@ -252,71 +256,3 @@ jobs:
         name: ${{ env.PACKAGENAME }}
         path: ${{ env.PACKAGENAME }}.zip
 
-
-  release:
-    permissions:
-      contents: write  # for actions/create-release to create a release
-    needs: [setup, full-source, ubuntu-1804, ubuntu-1804-shared, ubuntu-2004, ubuntu-2004-shared, ubuntu-2204, ubuntu-2204-shared]
-    runs-on: ubuntu-latest
-    steps:
-    - name: upload-ncnn-ubuntu-1804
-      uses: actions/upload-artifact@v3
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PACKAGENAME: ncnn-${{ needs.setup.outputs.VERSION }}-ubuntu-1804
-      with:
-        path: artifacts/${{ env.PACKAGENAME }}/${{ env.PACKAGENAME }}.zip
-        name: ${{ env.PACKAGENAME }}.zip
-        retention-days: 90
-
-    - name: upload-ncnn-ubuntu-1804-shared
-      uses: actions/upload-artifact@v3
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PACKAGENAME: ncnn-${{ needs.setup.outputs.VERSION }}-ubuntu-1804-shared
-      with:
-        path: artifacts/${{ env.PACKAGENAME }}/${{ env.PACKAGENAME }}.zip
-        name: ${{ env.PACKAGENAME }}.zip
-        retention-days: 90
-
-    - name: upload-ncnn-ubuntu-2004
-      uses: actions/upload-artifact@v3
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PACKAGENAME: ncnn-${{ needs.setup.outputs.VERSION }}-ubuntu-2004
-      with:
-        path: artifacts/${{ env.PACKAGENAME }}/${{ env.PACKAGENAME }}.zip
-        name: ${{ env.PACKAGENAME }}.zip
-        retention-days: 90
-
-    - name: upload-ncnn-ubuntu-2004-shared
-      uses: actions/upload-artifact@v3
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PACKAGENAME: ncnn-${{ needs.setup.outputs.VERSION }}-ubuntu-2004-shared
-      with:
-        path: artifacts/${{ env.PACKAGENAME }}/${{ env.PACKAGENAME }}.zip
-        name: ${{ env.PACKAGENAME }}.zip
-        retention-days: 90
-
-    - name: upload-ncnn-ubuntu-2204
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PACKAGENAME: ncnn-${{ needs.setup.outputs.VERSION }}-ubuntu-2204
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        path: artifacts/${{ env.PACKAGENAME }}/${{ env.PACKAGENAME }}.zip
-        name: ${{ env.PACKAGENAME }}.zip
-
-
-    - name: upload-ncnn-ubuntu-2204-shared
-      uses: actions/upload-artifact@v3
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PACKAGENAME: ncnn-${{ needs.setup.outputs.VERSION }}-ubuntu-2204-shared
-      with:
-        url: ${{ steps.create_release.outputs.upload_url }}
-        path: artifacts/${{ env.PACKAGENAME }}/${{ env.PACKAGENAME }}.zip
-        name: ${{ env.PACKAGENAME }}.zip
-        retention-days: 90
