@@ -21,7 +21,7 @@ jobs:
     steps:
     - name: get-version
       id: get_version
-      run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+      run: echo "" >> $GITHUB_OUTPUT
 
   full-source:
     needs: [setup]
@@ -72,6 +72,7 @@ jobs:
     - name: list files
       run: |
         ls build/install
+        strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC
     - name: upload-zip
       uses: actions/upload-artifact@v3
       with:
@@ -106,6 +107,10 @@ jobs:
         cp -a -P build/install/* ${{ env.PACKAGENAME }}
         rm -f ${{ env.PACKAGENAME }}.zip
         zip -9 -y -r ${{ env.PACKAGENAME }}.zip ${{ env.PACKAGENAME }}
+    - name: list files
+      run: |
+        ls build/install
+        strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC
     - name: upload-zip
       uses: actions/upload-artifact@v3
       with:
@@ -138,6 +143,10 @@ jobs:
         cp -a build/install/* ${{ env.PACKAGENAME }}
         rm -f ${{ env.PACKAGENAME }}.zip
         zip -9 -y -r ${{ env.PACKAGENAME }}.zip ${{ env.PACKAGENAME }}
+    - name: list files
+      run: |
+        ls build/install
+        strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC
     - name: upload-zip
       uses: actions/upload-artifact@v3
       with:
@@ -170,6 +179,10 @@ jobs:
         cp -a -P build/install/* ${{ env.PACKAGENAME }}
         rm -f ${{ env.PACKAGENAME }}.zip
         zip -9 -y -r ${{ env.PACKAGENAME }}.zip ${{ env.PACKAGENAME }}
+    - name: list files
+      run: |
+        ls build/install
+        strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC
     - name: upload-zip
       uses: actions/upload-artifact@v3
       with:
